@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#070A12" />
+    <title>VOLYNX — Productized Web Studio</title>
+    <meta name="description"
+        content="Conversion-first websites with micro-tools that reduce support load and increase qualified leads." />
+
+    <style>
+        :root {
+            --bg: #070A12;
+            --bg2: #050611;
+
+            --text: rgba(255, 255, 255, .92);
+            --muted: rgba(255, 255, 255, .64);
+
+            --surface: rgba(255, 255, 255, .045);
+            --surface2: rgba(255, 255, 255, .07);
+
+            --stroke: rgba(255, 255, 255, .10);
+            --stroke2: rgba(255, 255, 255, .16);
+
+            --r: 18px;
+            --r2: 26px;
+
+            --shadow: 0 22px 70px rgba(0, 0, 0, .58);
+            --shadow2: 0 12px 34px rgba(0, 0, 0, .40);
+
+            --pad: 16px;
+            --max: 1040px;
+
+            /* subtle warm “value” accent (not loud, not “gold everywhere”) */
+            --accent: rgba(255, 214, 140, .18);
+            --accent2: rgba(255, 214, 140, .10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            background:
+                radial-gradient(900px 520px at 50% -12%, rgba(255, 255, 255, .085), transparent 58%),
+                radial-gradient(820px 540px at 12% 30%, rgba(255, 255, 255, .06), transparent 62%),
+                radial-gradient(640px 380px at 88% 18%, var(--accent2), transparent 60%),
+                linear-gradient(180deg, var(--bg), var(--bg) 45%, var(--bg2));
+            font: 16px/1.55 "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
+            letter-spacing: .2px;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        :root {
+            --bg-banner: url("/assets/flux-wings.webp");
+            --bg-page: url("/assets/flux-deepbg.webp");
+        }
+
+        /* Background geral (imagem) */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-image: var(--bg-page);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transform: translateZ(0);
+            opacity: .55;
+            filter: saturate(1.05) contrast(1.05) brightness(.7);
+        }
+
+        /* Overlay geral (mantém legibilidade) */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(900px 520px at 50% -12%, rgba(255, 255, 255, .085), transparent 58%),
+                radial-gradient(820px 540px at 12% 30%, rgba(255, 255, 255, .06), transparent 62%),
+                radial-gradient(640px 380px at 88% 18%, rgba(255, 214, 140, .10), transparent 60%),
+                linear-gradient(180deg, var(--bg), var(--bg) 45%, var(--bg2));
+        }
+
+        /* Banner do header (masthead) */
+        .masthead {
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, .10);
+        }
+
+        .masthead::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: var(--bg-banner);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: saturate(1.1) contrast(1.08);
+            transform: scale(1.02);
+        }
+
+        .masthead::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                radial-gradient(900px 360px at 50% 10%, rgba(0, 0, 0, .05), rgba(0, 0, 0, .25) 55%, rgba(7, 10, 18, .92) 100%),
+                linear-gradient(180deg, rgba(7, 10, 18, .30), rgba(7, 10, 18, .55));
+        }
+
+        .masthead__inner {
+            position: relative;
+            z-index: 2;
+            max-width: var(--max);
+            margin: 0 auto;
+
+            min-height: clamp(260px, 34vh, 420px);
+            padding: clamp(26px, 6vh, 64px) var(--pad);
+
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        .wordmark {
+            width: min(560px, 92vw);
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 18px 50px rgba(0, 0, 0, .55));
+            margin: 0 auto;
+        }
+
+        .mastheadLead {
+            margin: 0;
+            max-width: 68ch;
+            color: rgba(255, 255, 255, .70);
+            font-size: 13px;
+        }
+
+        @media (min-width: 760px) {
+            .masthead__inner {
+                padding: 56px 18px 34px;
+            }
+
+            .wordmark {
+                width: min(720px, 78vw);
+            }
+
+            .mastheadLead {
+                font-size: 14px;
+            }
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img,
+        video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        :focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, .14);
+            border-color: rgba(255, 255, 255, .22);
+        }
+
+        .wrap {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =======================
+    Topbar
+    ======================= */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(7, 10, 18, .62);
+            border-bottom: 1px solid rgba(255, 255, 255, .09);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .topbar::before {
+            content: "";
+            position: absolute;
+            inset: auto 0 -1px 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .14), transparent);
+            opacity: .55;
+            pointer-events: none;
+        }
+
+        .topbar__inner {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 12px var(--pad);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .brand__mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background:
+                radial-gradient(18px 18px at 30% 30%, rgba(255, 255, 255, .16), transparent 65%),
+                radial-gradient(22px 22px at 80% 80%, var(--accent), transparent 68%),
+                rgba(255, 255, 255, .07);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .42);
+            display: grid;
+            place-items: center;
+            font-weight: 850;
+            letter-spacing: .8px;
+            flex: 0 0 auto;
+        }
+
+        .brand__text {
+            display: grid;
+            line-height: 1.1;
+            min-width: 0;
+        }
+
+        .brand__text strong {
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .brand__text span {
+            font-size: 12px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .menuBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .035);
+            border: 1px solid rgba(255, 255, 255, .12);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .28);
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
+            color: var(--text);
+            font-size: 18px;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .menuBtn:active {
+            transform: translateY(1px);
+        }
+
+        .nav {
+            display: none;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: rgba(255, 255, 255, .88);
+            font-size: 13px;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, .24);
+            -webkit-tap-highlight-color: transparent;
+            white-space: nowrap;
+        }
+
+        .chip:active {
+            transform: translateY(1px);
+        }
+
+        .drawer {
+            display: none;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            background: rgba(7, 10, 18, .72);
+        }
+
+        .drawer.open {
+            display: block;
+        }
+
+        .drawer__inner {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 10px var(--pad) 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* =======================
+    Layout shell
+    ======================= */
+        .shell {
+            max-width: var(--max);
+            width: 100%;
+            margin: 0 auto;
+            padding: 18px var(--pad) 36px;
+            display: grid;
+            gap: 12px;
+        }
+
+        /* =======================
+    Hero
+    ======================= */
+        .hero {
+            padding: 20px;
+            border-radius: var(--r2);
+            background:
+                radial-gradient(900px 420px at 18% -10%, rgba(255, 255, 255, .10), transparent 62%),
+                radial-gradient(640px 360px at 90% 14%, var(--accent2), transparent 62%),
+                linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
+            border: 1px solid rgba(255, 255, 255, .12);
+            box-shadow: var(--shadow2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, transparent, rgba(255, 255, 255, .08), transparent);
+            opacity: .15;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        .hero>* {
+            position: relative;
+        }
+
+        .kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, .72);
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, .78);
+            box-shadow: 0 0 0 6px rgba(255, 255, 255, .06);
+        }
+
+        h1 {
+            margin: 10px 0 8px;
+            font-size: clamp(24px, 4.6vw, 38px);
+            line-height: 1.10;
+            letter-spacing: -0.2px;
+            font-weight: 850;
+        }
+
+        .sub {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 62ch;
+        }
+
+        .heroActions {
+            margin-top: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        /* =======================
+    Buttons
+    ======================= */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, .18);
+            background:
+                radial-gradient(140px 80px at 30% 30%, rgba(255, 255, 255, .12), transparent 70%),
+                rgba(255, 255, 255, .08);
+            box-shadow: 0 16px 46px rgba(0, 0, 0, .32);
+            font-weight: 750;
+            letter-spacing: .2px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn--ghost {
+            background: rgba(0, 0, 0, .20);
+            border: 1px solid rgba(255, 255, 255, .12);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .28);
+            font-weight: 700;
+        }
+
+        .trustRow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .18);
+            border: 1px solid rgba(255, 255, 255, .10);
+            color: rgba(255, 255, 255, .74);
+            font-size: 12px;
+        }
+
+        /* =======================
+    Sections / Cards
+    ======================= */
+        .grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .card {
+            padding: 18px;
+            border-radius: var(--r2);
+            background:
+                radial-gradient(520px 240px at 20% 0%, rgba(255, 255, 255, .06), transparent 62%),
+                linear-gradient(180deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .035));
+            border: 1px solid rgba(255, 255, 255, .12);
+            box-shadow: var(--shadow2);
+        }
+
+        @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+            .card {
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            letter-spacing: .2px;
+            font-weight: 800;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .split {
+            display: grid;
+            gap: 12px;
+        }
+
+        .proof {
+            display: grid;
+            gap: 10px;
+        }
+
+        .proofItem {
+            padding: 12px;
+            border-radius: 18px;
+            background: rgba(0, 0, 0, .18);
+            border: 1px solid rgba(255, 255, 255, .10);
+        }
+
+        .proofItem strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .proofItem span {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .price {
+            display: inline-flex;
+            margin-top: 10px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .12);
+            font-size: 12px;
+            color: rgba(255, 255, 255, .78);
+        }
+
+        .bullets {
+            margin: 10px 0 0;
+            padding-left: 18px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .bullets li {
+            margin: 6px 0;
+        }
+
+        /* =======================
+    Case list
+    ======================= */
+        .caseList {
+            display: grid;
+            gap: 10px;
+        }
+
+        .case {
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(0, 0, 0, .18);
+            border: 1px solid rgba(255, 255, 255, .10);
+            display: grid;
+            gap: 6px;
+        }
+
+        .caseHeader {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .caseTitle {
+            font-weight: 850;
+            font-size: 13px;
+            letter-spacing: .15px;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tag {
+            flex: 0 0 auto;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .12);
+            font-size: 11px;
+            color: rgba(255, 255, 255, .72);
+            white-space: nowrap;
+        }
+
+        .caseMeta {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* =======================
+    Steps
+    ======================= */
+        .steps {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .step {
+            padding: 14px;
+            border-radius: 18px;
+            background: rgba(0, 0, 0, .18);
+            border: 1px solid rgba(255, 255, 255, .10);
+            display: grid;
+            gap: 4px;
+        }
+
+        .step strong {
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .step span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* =======================
+    Forms
+    ======================= */
+        label {
+            display: grid;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 12px;
+            border-radius: 14px;
+            background: rgba(0, 0, 0, .26);
+            border: 1px solid rgba(255, 255, 255, .14);
+            outline: none;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+            color: var(--text);
+        }
+
+        textarea {
+            min-height: 92px;
+            resize: vertical;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, .42);
+        }
+
+        /* =======================
+    Footer
+    ======================= */
+        .footer {
+            margin-top: auto;
+            padding: 18px var(--pad) 28px;
+            color: rgba(255, 255, 255, .55);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* =======================
+    Responsive
+    ======================= */
+
+        /* large phones / small tablets */
+        @media (min-width: 560px) {
+            .grid.cols2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* desktop */
+        @media (min-width: 760px) {
+            .menuBtn {
+                display: none;
+            }
+
+            .nav {
+                display: inline-flex;
+            }
+
+            .drawer {
+                display: none !important;
+            }
+
+            .shell {
+                padding: 28px 18px 56px;
+                gap: 14px;
+            }
+
+            .heroActions {
+                grid-template-columns: auto auto;
+                justify-content: start;
+                width: fit-content;
+            }
+
+            .btn {
+                width: auto;
+                padding-inline: 18px;
+            }
+
+            .split {
+                grid-template-columns: 1.1fr .9fr;
+                align-items: start;
+            }
+
+            .grid.cols3 {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .chip:hover {
+                border-color: rgba(255, 255, 255, .18);
+                background: rgba(255, 255, 255, .05);
+            }
+
+            .btn:hover {
+                border-color: rgba(255, 255, 255, .24);
+                background:
+                    radial-gradient(160px 90px at 30% 30%, rgba(255, 255, 255, .14), transparent 72%),
+                    rgba(255, 255, 255, .10);
+            }
+
+            .btn--ghost:hover {
+                background: rgba(255, 255, 255, .05);
+                border-color: rgba(255, 255, 255, .18);
+            }
+
+            .case:hover {
+                border-color: rgba(255, 255, 255, .18);
+                background: rgba(255, 255, 255, .04);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+
+        <header class="topbar">
+            <div class="topbar__inner">
+                <a class="brand" href="/" aria-label="Volynx home">
+                    <span class="brand__mark">V</span>
+                    <span class="brand__text">
+                        <strong>VOLYNX</strong>
+                        <span>Productized Web Studio • UK/EU</span>
+                    </span>
+                </a>
+
+                <button class="menuBtn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+
+                <nav class="nav" aria-label="Primary">
+                    <a class="chip" href="#services">Services</a>
+                    <a class="chip" href="#cases">Case Studies</a>
+                    <a class="chip" href="/volynx.lab/">Labs</a>
+                    <a class="chip" href="#process">Process</a>
+                    <a class="chip" href="#contact">Contact</a>
+                </nav>
+            </div>
+
+            <div class="drawer" id="drawer" aria-label="Mobile menu">
+                <div class="drawer__inner">
+                    <a class="chip" href="#services">Services</a>
+                    <a class="chip" href="#cases">Case Studies</a>
+                    <a class="chip" href="/volynx.lab/">Labs</a>
+                    <a class="chip" href="#process">Process</a>
+                    <a class="chip" href="#contact">Contact</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="masthead" aria-label="Volynx header banner">
+            <div class="masthead__inner">
+                <img class="wordmark" src="/assets/new-wordmark.webp" alt="VOLYNX" />
+                <p class="mastheadLead">
+                    Productized web studio for UK/EU: conversion-first websites + micro-tools that reduce support load
+                    and
+                    increase qualified leads.
+                </p>
+            </div>
+        </section>
+
+        <main class="shell">
+
+            <section class="hero" aria-label="Hero">
+                <div class="kicker"><span class="dot"></span> Productized Studio</div>
+                <h1>Conversion-first websites — with micro-tools that cut support load and increase qualified leads.
+                </h1>
+                <p class="sub">
+                    Volynx ships conversion-first web experiences and small tools that remove friction (lead routing,
+                    calculators,
+                    image tools, onboarding micros). Predictable delivery. Clean handover.
+                </p>
+
+                <div class="heroActions">
+                    <a class="btn" href="#contact">Request a quote</a>
+                    <a class="btn btn--ghost" href="#cases">See case studies</a>
+                </div>
+
+                <div class="trustRow" aria-label="Trust badges">
+                    <span class="badge">UK/EU timezone overlap</span>
+                    <span class="badge">Performance-first builds</span>
+                    <span class="badge">GDPR-minded delivery</span>
+                </div>
+            </section>
+
+            <section class="card" aria-label="Proof">
+                <h2>Proof, not promises</h2>
+                <p class="small">Replace the placeholders below with Lighthouse screenshots / links / short demos.</p>
+
+                <div class="grid cols2">
+                    <div class="proofItem">
+                        <strong>Performance baseline (Lighthouse)</strong>
+                        <span>Insert: score screenshot + URL. Example: “95+ mobile performance after
+                            optimisation.”</span>
+                    </div>
+                    <div class="proofItem">
+                        <strong>Operational win (reduced support load)</strong>
+                        <span>Insert: bot flow video or metric proxy. Example: “Form-first routing → fewer WhatsApp
+                            loops.”</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" aria-label="What we ship">
+                <div class="split">
+                    <div>
+                        <h2>What we ship</h2>
+                        <p class="muted">
+                            Not “a website”. A reliable pipeline: strategy → design → build → deploy → handover.
+                            Micro-tools are optional, but they’re often the unfair advantage.
+                        </p>
+                    </div>
+                    <div class="proof">
+                        <div class="proofItem">
+                            <strong>Conversion-first UX</strong>
+                            <span>Less friction, more actions. (CFO-friendly, not just “pretty”.)</span>
+                        </div>
+                        <div class="proofItem">
+                            <strong>Delivery-ready process</strong>
+                            <span>Short cycles, clear scope, predictable delivery.</span>
+                        </div>
+                        <div class="proofItem">
+                            <strong>Tooling add-ons</strong>
+                            <span>Lead qualifiers, calculators, routing, image tooling, onboarding micros.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" id="services" aria-label="Services">
+                <h2>Services (productized)</h2>
+                <p class="muted">Three offers. Clear scope. Predictable delivery.</p>
+
+                <div class="grid cols3">
+                    <article class="card" style="background: rgba(255,255,255,.04);">
+                        <h2>Landing Sprint</h2>
+                        <p class="muted">7–10 days. For launches, offers, validation.</p>
+                        <span class="price">From £— / €—</span>
+                        <ul class="bullets">
+                            <li>1 landing page + offer structure</li>
+                            <li>On-page SEO basics</li>
+                            <li>Performance pass + deploy</li>
+                            <li>Clean handover</li>
+                        </ul>
+                    </article>
+
+                    <article class="card" style="background: rgba(255,255,255,.04);">
+                        <h2>Premium Website</h2>
+                        <p class="muted">2–4 weeks. Credibility + conversion.</p>
+                        <span class="price">From £— / €—</span>
+                        <ul class="bullets">
+                            <li>Multi-page site</li>
+                            <li>Lightweight design system</li>
+                            <li>Responsive + maintainable</li>
+                            <li>Analytics hooks</li>
+                        </ul>
+                    </article>
+
+                    <article class="card" style="background: rgba(255,255,255,.04);">
+                        <h2>Conversion Tools Add-on</h2>
+                        <p class="muted">Reduce repetitive support. Improve lead quality.</p>
+                        <span class="price">From £— / €—</span>
+                        <ul class="bullets">
+                            <li>Bot with clarifying chips</li>
+                            <li>Lead routing + form-first funnels</li>
+                            <li>Calculators / micro-tools</li>
+                            <li>Tool UX + event tracking</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <p class="small" style="margin-top:10px;">
+                    Tip: If you're unsure, start with a Landing Sprint. We can expand without rebuilding from scratch.
+                </p>
+            </section>
+
+            <section class="card" id="cases" aria-label="Case studies">
+                <h2>Case studies (5 pieces, not 20)</h2>
+                <p class="muted">
+                    Each case shows: problem → approach → stack → outcome (or proxy metrics).
+                </p>
+
+                <div class="caseList">
+                    <a class="case" href="/volynx.lab/image-scaler/" aria-label="Case: Image Scaler">
+                        <div class="caseHeader">
+                            <div class="caseTitle">Image Scaler — pay-per-use tool</div>
+                            <span class="tag">Tool • Labs</span>
+                        </div>
+                        <p class="caseMeta">Problem → pipeline → output quality. Add: Lighthouse + short demo video.</p>
+                    </a>
+
+                    <a class="case" href="/case-studies/lead-router-bot/" aria-label="Case: Lead Router Bot">
+                        <div class="caseHeader">
+                            <div class="caseTitle">Anti-fallback bot + lead routing (chips)</div>
+                            <span class="tag">Automation</span>
+                        </div>
+                        <p class="caseMeta">Form-first funnel. WhatsApp as last resort. Add: completion rate proxy.</p>
+                    </a>
+
+                    <a class="case" href="/case-studies/devjourney-landing/" aria-label="Case: DevJourney landing">
+                        <div class="caseHeader">
+                            <div class="caseTitle">DevJourney landing — offer + conversion</div>
+                            <span class="tag">Landing</span>
+                        </div>
+                        <p class="caseMeta">Copy, UI, performance, time-to-deploy. Add: before/after.</p>
+                    </a>
+
+                    <a class="case" href="/services/" aria-label="Case: Volynx services page">
+                        <div class="caseHeader">
+                            <div class="caseTitle">VOLYNX services — design system consistency</div>
+                            <span class="tag">Brand</span>
+                        </div>
+                        <p class="caseMeta">Responsive build + clean structure. Add: system tokens + components.</p>
+                    </a>
+
+                    <a class="case" href="/case-studies/refactor-rescue/" aria-label="Case: Refactor rescue">
+                        <div class="caseHeader">
+                            <div class="caseTitle">Refactor/Rescue — risk reduction</div>
+                            <span class="tag">Rescue</span>
+                        </div>
+                        <p class="caseMeta">Before/after. Fix layout, performance, accessibility. Reliable delivery.</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="card" aria-label="Labs">
+                <h2>Volynx Lab</h2>
+                <p class="muted">
+                    Tools are leverage. They prove capability and reduce costs for clients.
+                </p>
+                <div class="grid cols2">
+                    <div class="proofItem">
+                        <strong>Explore tools</strong>
+                        <span>Catalogue of micro-products (image tools, lead tools, onboarding micros).</span>
+                    </div>
+                    <div class="proofItem">
+                        <strong>Need something similar?</strong>
+                        <span>We can build a tailored version without reinventing the wheel.</span>
+                    </div>
+                </div>
+                <div style="margin-top:12px;">
+                    <a class="btn btn--ghost" href="/volynx.lab/">Open Labs</a>
+                </div>
+            </section>
+
+            <section class="card" id="process" aria-label="Process">
+                <h2>Process (predictable by design)</h2>
+                <ul class="steps">
+                    <li class="step">
+                        <strong>1) Fit check (10 minutes)</strong>
+                        <span>We align on scope, timeline and outcomes. If it’s not a match, we say it early.</span>
+                    </li>
+                    <li class="step">
+                        <strong>2) Sprint plan</strong>
+                        <span>Clear deliverables. Controlled scope. Transparent milestones.</span>
+                    </li>
+                    <li class="step">
+                        <strong>3) Build & ship</strong>
+                        <span>Implement, deploy, iterate. Performance and UX are part of the baseline.</span>
+                    </li>
+                    <li class="step">
+                        <strong>4) Handover</strong>
+                        <span>Docs + ownership. You can run it without ongoing dependency.</span>
+                    </li>
+                </ul>
+                <p class="small" style="margin-top:10px;">
+                    GDPR-minded builds: minimal tracking by default, clear consent patterns, and data minimisation.
+                </p>
+            </section>
+
+            <section class="card" id="contact" aria-label="Contact">
+                <h2>Contact</h2>
+                <p class="muted">
+                    Share what you’re building and what “success” looks like. You’ll get next steps and a clear delivery
+                    plan.
+                </p>
+
+                <form class="grid" id="contactForm">
+                    <label>
+                        Name
+                        <input name="name" autocomplete="name" placeholder="Your name" required />
+                    </label>
+
+                    <label>
+                        Email
+                        <input name="email" type="email" autocomplete="email" placeholder="you@domain.com" required />
+                    </label>
+
+                    <label>
+                        What are you building?
+                        <textarea name="message" placeholder="Landing? Website? A micro-tool? What outcome matters?"
+                            required></textarea>
+                    </label>
+
+                    <p class="small" id="contactStatus" role="status" aria-live="polite"></p>
+
+                    <button class="btn" type="submit">Send brief</button>
+                    <a class="btn btn--ghost" href="https://cal.com/" target="_blank" rel="noopener noreferrer">
+                        Calendar (replace link)
+                    </a>
+
+                    <p class="small">
+                        Prefer email? <a class="chip" href="mailto:hello@volynx.world">hello@volynx.world</a>
+                    </p>
+                </form>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            © <span id="y"></span> VOLYNX — Ship fast. Reduce friction. Build proof.
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById("y").textContent = new Date().getFullYear();
+
+        const menuBtn = document.getElementById("menuBtn");
+        const drawer = document.getElementById("drawer");
+
+        const toggleDrawer = () => {
+            const open = drawer.classList.toggle("open");
+            menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+        };
+
+        menuBtn?.addEventListener("click", toggleDrawer);
+
+        drawer?.addEventListener("click", (e) => {
+            const a = e.target.closest("a");
+            if (!a) return;
+            drawer.classList.remove("open");
+            menuBtn.setAttribute("aria-expanded", "false");
+        });
+
+        const form = document.getElementById("contactForm");
+        const statusEl = document.getElementById("contactStatus");
+
+        form?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            statusEl.textContent = "Sending…";
+            await new Promise(r => setTimeout(r, 450));
+            statusEl.textContent = "Sent. You’ll receive a reply with next steps.";
+            form.reset();
+        });
+    </script>
+</body>
+
+</html>
