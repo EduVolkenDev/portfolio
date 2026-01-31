@@ -9,37 +9,30 @@
     <title>VOLYNX — Productized Web Studio</title>
     <meta name="description"
         content="Conversion-first websites with micro-tools that reduce support load and increase qualified leads." />
-    <link rel="preload" as="image" href="/assets/flux-wings.webp">
-<link rel="preload" as="image" href="/assets/flux-deepbg.webp">
-<link rel="preload" as="image" href="/assets/new-wordmark.webp">
 
+    <!-- GitHub Pages (repo: /portfolio/) => use paths RELATIVOS -->
+    <link rel="preload" as="image" href="./future-background.webp">
+    <link rel="preload" as="image" href="./assets/new-wordmark.webp">
 
     <style>
         :root {
-            --bg: #070A12;
-            --bg2: #050611;
+            /* Alturas “contratuais” (ajuste fino aqui) */
+            --topbarH: 64px;
+            /* se ficar gap/overlap, ajuste 60–72 */
+            --mastH: clamp(240px, 42svh, 520px);
 
-            --text: rgba(255, 255, 255, .92);
-            --muted: rgba(255, 255, 255, .64);
+            /* Controle do banner */
+            --banner-contrast: 1.06;
+            --banner-sat: 1.08;
+            --banner-bright: 1.00;
 
-            --surface: rgba(255, 255, 255, .045);
-            --surface2: rgba(255, 255, 255, .07);
+            /* Quanto mais “transparente” no fim, mais ele “cola” no deepbg */
+            --banner-fade-top: rgba(7, 10, 18, .18);
+            --banner-fade-mid: rgba(7, 10, 18, .35);
+            --banner-fade-bot: rgba(7, 10, 18, 0);
 
-            --stroke: rgba(255, 255, 255, .10);
-            --stroke2: rgba(255, 255, 255, .16);
-
-            --r: 18px;
-            --r2: 26px;
-
-            --shadow: 0 22px 70px rgba(0, 0, 0, .58);
-            --shadow2: 0 12px 34px rgba(0, 0, 0, .40);
-
-            --pad: 16px;
-            --max: 1040px;
-
-            /* subtle warm “value” accent (not loud, not “gold everywhere”) */
-            --accent: rgba(255, 214, 140, .18);
-            --accent2: rgba(255, 214, 140, .10);
+            /* banner overlay (mantém legível sem “matar” o banner) */
+            --banner-vignette: rgba(7, 10, 18, .40);
         }
 
         * {
@@ -48,132 +41,26 @@
 
         html,
         body {
-            height: 100%;
+            height: auto;
+            min-height: 100%;
         }
 
         html {
             scroll-behavior: smooth;
+            background: var(--bg);
         }
 
         body {
             margin: 0;
+            min-height: 100%;
             color: var(--text);
-            background:
-                radial-gradient(900px 520px at 50% -12%, rgba(255, 255, 255, .085), transparent 58%),
-                radial-gradient(820px 540px at 12% 30%, rgba(255, 255, 255, .06), transparent 62%),
-                radial-gradient(640px 380px at 88% 18%, var(--accent2), transparent 60%),
-                linear-gradient(180deg, var(--bg), var(--bg) 45%, var(--bg2));
+            background: var(--bg);
             font: 16px/1.55 "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
             letter-spacing: .2px;
             overflow-x: hidden;
+            overflow-y: auto;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-        }
-
-        :root {
-            --bg-banner: url("/assets/flux-wings.webp");
-            --bg-page: url("/assets/flux-deepbg.webp");
-        }
-
-        /* Background geral (imagem) */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background-image: var(--bg-page);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transform: translateZ(0);
-            opacity: .55;
-            filter: saturate(1.05) contrast(1.05) brightness(.7);
-        }
-
-        /* Overlay geral (mantém legibilidade) */
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background:
-                radial-gradient(900px 520px at 50% -12%, rgba(255, 255, 255, .085), transparent 58%),
-                radial-gradient(820px 540px at 12% 30%, rgba(255, 255, 255, .06), transparent 62%),
-                radial-gradient(640px 380px at 88% 18%, rgba(255, 214, 140, .10), transparent 60%),
-                linear-gradient(180deg, var(--bg), var(--bg) 45%, var(--bg2));
-        }
-
-        /* Banner do header (masthead) */
-        .masthead {
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(255, 255, 255, .10);
-        }
-
-        .masthead::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            background-image: var(--bg-banner);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: saturate(1.1) contrast(1.08);
-            transform: scale(1.02);
-        }
-
-        .masthead::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background:
-                radial-gradient(900px 360px at 50% 10%, rgba(0, 0, 0, .05), rgba(0, 0, 0, .25) 55%, rgba(7, 10, 18, .92) 100%),
-                linear-gradient(180deg, rgba(7, 10, 18, .30), rgba(7, 10, 18, .55));
-        }
-
-        .masthead__inner {
-            position: relative;
-            z-index: 2;
-            max-width: var(--max);
-            margin: 0 auto;
-
-            min-height: clamp(260px, 34vh, 420px);
-            padding: clamp(26px, 6vh, 64px) var(--pad);
-
-            display: grid;
-            place-items: center;
-            text-align: center;
-        }
-
-        .wordmark {
-            width: min(560px, 92vw);
-            height: auto;
-            display: block;
-            filter: drop-shadow(0 18px 50px rgba(0, 0, 0, .55));
-            margin: 0 auto;
-        }
-
-        .mastheadLead {
-            margin: 0;
-            max-width: 68ch;
-            color: rgba(255, 255, 255, .70);
-            font-size: 13px;
-        }
-
-        @media (min-width: 760px) {
-            .masthead__inner {
-                padding: 56px 18px 34px;
-            }
-
-            .wordmark {
-                width: min(720px, 78vw);
-            }
-
-            .mastheadLead {
-                font-size: 14px;
-            }
         }
 
         a {
@@ -201,38 +88,113 @@
         }
 
         .wrap {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: none;
+            /* evita “boxed” acidental */
+            margin: 0;
             min-height: 100svh;
             display: flex;
             flex-direction: column;
+            padding-bottom: calc(24px + env(safe-area-inset-bottom));
+        }
+
+        /* ===== Background simples (imagem + overlay leve) ===== */
+        body {
+            margin: 0;
+            color: rgba(255, 255, 255, .92);
+            background: linear-gradient(180deg, rgba(7, 10, 18, 0.1), rgba(5, 6, 17, 0.25)), url("./assets/future-background.webp");
+            background-position-x: 0%, 0%;
+            background-position-y: 0%, 0%;
+            background-size: cover;
+            background-position: right;
+            background-repeat: round;
+            font: 16px/1.55 "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
+            overflow-x: hidden;
+        }
+
+
+        /* ===== Banner simples (imagem de fundo no próprio elemento) ===== */
+        .masthead {
+            background: transparent;
+            /* sem imagem aqui */
+            border-bottom: 1px solid rgba(255, 255, 255, .10);
+        }
+
+        /* opcional: se quiser “placa/vidro” sem virar outro bg */
+        .masthead__inner {
+            max-width: var(--max, 1040px);
+            margin: 0 auto;
+            padding: 22px 16px;
+            min-height: clamp(220px, 34vh, 420px);
+
+            display: grid;
+            place-items: center;
+            gap: 12px;
+            text-align: center;
+
+            background: rgba(7, 10, 18, .28);
+            /* só um overlay simples */
+            border-radius: 0;
+            /* ou deixa reto */
+        }
+
+
+        .wordmark {
+            width: min(520px, 92vw);
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 18px 50px rgba(0, 0, 0, .55));
+        }
+
+        .mastheadLead {
+            margin: 0;
+            max-width: 62ch;
+            color: rgba(255, 255, 255, .72);
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 60;
+            background: black;
+            padding: 15px 300px;
+        }
+
+
+        /* Desktop: banner mais “cinema” */
+        @media (min-width: 760px) {
+            .masthead__inner {
+                padding: 48px 18px;
+            }
+
+            .wordmark {
+                width: min(1000px, 90vw);
+                padding-top: 60px;
+            }
+
+            .mastheadLead {
+                font-size: 30px;
+                text-align: center;
+                font-weight: 700;
+            }
+
         }
 
         /* =======================
-    Topbar
-    ======================= */
-        .topbar {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(7, 10, 18, .62);
-            border-bottom: 1px solid rgba(255, 255, 255, .09);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .topbar::before {
-            content: "";
-            position: absolute;
-            inset: auto 0 -1px 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .14), transparent);
-            opacity: .55;
-            pointer-events: none;
-        }
+       Topbar
+       ======================= */
 
         .topbar__inner {
             max-width: var(--max);
             margin: 0 auto;
-            padding: 12px var(--pad);
+            padding:
+                12px calc(var(--pad) + env(safe-area-inset-right)) 12px calc(var(--pad) + env(safe-area-inset-left));
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -302,6 +264,7 @@
             font-size: 18px;
             line-height: 1;
             padding: 0;
+            flex: 0 0 auto;
         }
 
         .menuBtn:active {
@@ -354,8 +317,21 @@
         }
 
         /* =======================
-    Layout shell
-    ======================= */
+       Masthead Banner
+       ======================= */
+        /* Topbar vira FIXA (para o masthead fixar “embaixo dela”) */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 60;
+        }
+
+
+        /* =======================
+       Layout shell
+       ======================= */
         .shell {
             max-width: var(--max);
             width: 100%;
@@ -363,34 +339,25 @@
             padding: 18px var(--pad) 36px;
             display: grid;
             gap: 12px;
+            padding-bottom: calc(30px + env(safe-area-inset-bottom));
         }
 
         /* =======================
-    Hero
-    ======================= */
+       Hero
+       ======================= */
         .hero {
-            padding: 20px;
-            border-radius: var(--r2);
-            background:
-                radial-gradient(900px 420px at 18% -10%, rgba(255, 255, 255, .10), transparent 62%),
-                radial-gradient(640px 360px at 90% 14%, var(--accent2), transparent 62%),
-                linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
-            border: 1px solid rgba(255, 255, 255, .12);
+            padding: 40px;
+            border-radius: 40px;
+            background: radial-gradient(900px 420px at 18% -10%, rgba(255, 255, 255, .08), transparent 62%), radial-gradient(640px 360px at 90% 14%, var(--accent2), transparent 62%), linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .02));
+            border: 2px outset rgba(255, 255, 255, 0.3);
             box-shadow: var(--shadow2);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-top: 50px;
         }
 
-        .hero::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(90deg, transparent, rgba(255, 255, 255, .08), transparent);
-            opacity: .15;
-            pointer-events: none;
-            mix-blend-mode: screen;
-        }
 
         .hero>* {
             position: relative;
@@ -400,10 +367,11 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, .72);
-            letter-spacing: 1.1px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 1.6px;
             text-transform: uppercase;
+            font-weight: 700;
         }
 
         .dot {
@@ -416,17 +384,19 @@
 
         h1 {
             margin: 10px 0 8px;
-            font-size: clamp(24px, 4.6vw, 38px);
+            font-size: clamp(24px, 6.2vw, 40px);
             line-height: 1.10;
             letter-spacing: -0.2px;
             font-weight: 850;
         }
 
         .sub {
-            margin: 0;
+            margin: 20px 5px 30px;
             color: var(--muted);
-            font-size: 14px;
+            font-size: 15px;
             max-width: 62ch;
+            font-weight: 700;
+            text-shadow: 0 0 3px black, 0 0 2px black;
         }
 
         .heroActions {
@@ -436,8 +406,8 @@
         }
 
         /* =======================
-    Buttons
-    ======================= */
+       Buttons
+       ======================= */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -446,16 +416,20 @@
             width: 100%;
             padding: 12px 14px;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, .18);
-            background:
-                radial-gradient(140px 80px at 30% 30%, rgba(255, 255, 255, .12), transparent 70%),
-                rgba(255, 255, 255, .08);
-            box-shadow: 0 16px 46px rgba(0, 0, 0, .32);
+            border: 3px double rgb(50, 141, 145);
+            background: radial-gradient(120px 124px at 50% 50%, rgba(132, 39, 174, 0.8), transparent 80%), rgba(14, 4, 19, 0.85);
+            box-shadow: 0 0px 10px 5px rgba(251, 251, 251, 0.5);
             font-weight: 750;
             letter-spacing: .2px;
             cursor: pointer;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            transition: box-shadow 220ms ease, transform 220ms ease;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0px 10px 5px rgba(58, 49, 49, 0.5);
+            animation: transition 0.6s ease-in-out;
         }
 
         .btn:active {
@@ -463,54 +437,69 @@
         }
 
         .btn--ghost {
-            background: rgba(0, 0, 0, .20);
-            border: 1px solid rgba(255, 255, 255, .12);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, .28);
+            background: radial-gradient(120px 124px at 50% 50%, rgba(39, 149, 174, 0.62), transparent 80%), rgba(12, 5, 15, 0.54);
+            border: 2px inset rgba(30, 15, 15, 0.94);
+            box-shadow: 0 0px 20px 12px rgba(226, 217, 217, 0.28);
             font-weight: 700;
+            transition: box-shadow 220ms ease, transform 220ms ease;
+        }
+
+        .btn--ghost:hover {
+            box-shadow: 0 0px 10px 5px rgba(251, 251, 251, 0.5);
+            animation: transition 0.6s ease-in-out;
         }
 
         .trustRow {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 12px;
+            gap: 7px;
+            margin: 25px auto;
         }
 
         .badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 10px;
+            padding: 11px 0px;
             border-radius: 999px;
-            background: rgba(0, 0, 0, .18);
-            border: 1px solid rgba(255, 255, 255, .10);
-            color: rgba(255, 255, 255, .74);
+            background: linear-gradient(to right, black 15%, #57a7e175 40%, #f7e5595e 50%, #ea64ee4f 67%, black 90%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgb(255, 255, 255);
             font-size: 12px;
+            max-width: 210px;
+            width: 210px;
+            justify-content: center;
+            margin: auto;
+            text-shadow: 0 0 10px black, 0 0 5px black;
+            font-weight: 465;
         }
 
         /* =======================
-    Sections / Cards
-    ======================= */
+       Sections / Cards
+       ======================= */
         .grid {
             display: grid;
             gap: 12px;
         }
 
         .card {
-            padding: 18px;
+            padding: 20px;
             border-radius: var(--r2);
-            background:
-                radial-gradient(520px 240px at 20% 0%, rgba(255, 255, 255, .06), transparent 62%),
-                linear-gradient(180deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .035));
-            border: 1px solid rgba(255, 255, 255, .12);
+            background: radial-gradient(560px 450px at 20% 10%, rgba(80, 222, 237, 0.24), transparent 52%), linear-gradient(190deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .01));
+            border: 1px outset rgba(255, 255, 255, 0.15);
             box-shadow: var(--shadow2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
-            .card {
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-            }
+        .card2 {
+            padding: 20px;
+            border-radius: 10px;
+            background: radial-gradient(560px 450px at 20% 10%, rgba(3, 5, 5, 0.92), transparent 35%), linear-gradient(190deg, rgba(10, 6, 6, 0.76), rgba(17, 3, 3, 0));
+            border: 4px double rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 10px 2px inset darkblue;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .card h2 {
@@ -521,13 +510,19 @@
         }
 
         .muted {
-            color: var(--muted);
+            color: white;
+            text-shadow: 0 0 5px black;
+            font-size: 15px;
+            padding: 5px;
         }
 
         .small {
             font-size: 12px;
-            color: var(--muted);
-            margin: 0;
+            color: white;
+            margin: 10px auto;
+            margin-top: 10px;
+            text-shadow: 0 0 6px black, 0 0 3px black;
+            text-align: center;
         }
 
         .split {
@@ -541,10 +536,13 @@
         }
 
         .proofItem {
-            padding: 12px;
+            padding: 15px;
             border-radius: 18px;
-            background: rgba(0, 0, 0, .18);
-            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px inset rgba(255, 255, 255, 0.3);
+            margin-top: 15px;
+            margin-bottom: -15px;
+            backdrop-filter: blur(20px);
         }
 
         .proofItem strong {
@@ -556,19 +554,22 @@
         .proofItem span {
             display: block;
             font-size: 12px;
-            color: var(--muted);
+            color: white;
             margin-top: 4px;
+            text-shadow: 0 0 1px white, 0 0 5px white;
         }
 
         .price {
             display: inline-flex;
-            margin-top: 10px;
             padding: 8px 10px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, .03);
-            border: 1px solid rgba(255, 255, 255, .12);
-            font-size: 12px;
-            color: rgba(255, 255, 255, .78);
+            background: linear-gradient(to right, #2000ff63 0%, #8000806b 100%);
+            border: 2px inset rgba(255, 255, 255, 0.26);
+            font-size: 13px;
+            color: rgb(255, 255, 255);
+            font-weight: 700;
+            text-shadow: 0 0 3px black, 0 0 5px white;
+            margin-bottom: 5px;
         }
 
         .bullets {
@@ -580,11 +581,9 @@
 
         .bullets li {
             margin: 6px 0;
+            text-shadow: 0 0 3px white, 0 0 15px white;
         }
 
-        /* =======================
-    Case list
-    ======================= */
         .caseList {
             display: grid;
             gap: 10px;
@@ -592,11 +591,11 @@
 
         .case {
             padding: 14px;
-            border-radius: 18px;
-            background: rgba(0, 0, 0, .18);
-            border: 1px solid rgba(255, 255, 255, .10);
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px inset rgba(255, 255, 255, 0.3);
             display: grid;
-            gap: 6px;
+            gap: 7px;
         }
 
         .caseHeader {
@@ -614,29 +613,29 @@
             min-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            white-space: normal;
         }
 
         .tag {
             flex: 0 0 auto;
             padding: 6px 10px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, .03);
-            border: 1px solid rgba(255, 255, 255, .12);
+            background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, .45) 0%, rgba(255, 255, 255, 0) 58%), linear-gradient(135deg, #f7f2e3 0%, #b58b23 32%, #f9cc3c 52%, #82641c 78%, #d0c091 100%);
+            border: 2px solid rgba(255, 214, 140, .35);
             font-size: 11px;
-            color: rgba(255, 255, 255, .72);
+            color: #1b1204;
             white-space: nowrap;
+            box-shadow: 0 5px 20px 3px rgba(237, 229, 229, 0.42);
+            font-weight: 590;
         }
 
         .caseMeta {
             font-size: 12px;
-            color: var(--muted);
+            color: white;
             margin: 0;
+            text-shadow: 0 0 5px white, 0 0 2px white;
         }
 
-        /* =======================
-    Steps
-    ======================= */
         .steps {
             list-style: none;
             margin: 0;
@@ -648,10 +647,11 @@
         .step {
             padding: 14px;
             border-radius: 18px;
-            background: rgba(0, 0, 0, .18);
-            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(12, 2, 2, 0.43);
+            border: 2px inset rgba(255, 255, 255, 0.3);
             display: grid;
             gap: 4px;
+
         }
 
         .step strong {
@@ -661,17 +661,16 @@
 
         .step span {
             font-size: 12px;
-            color: var(--muted);
+            color: white;
+            text-shadow: 0 0 3px white, 0 0 2px white;
         }
 
-        /* =======================
-    Forms
-    ======================= */
         label {
             display: grid;
             gap: 8px;
             font-size: 13px;
-            color: var(--muted);
+            color: white;
+            text-shadow: 0 0 3px white, 0 0 1px black;
         }
 
         input,
@@ -679,11 +678,12 @@
             width: 100%;
             padding: 12px 12px;
             border-radius: 14px;
-            background: rgba(0, 0, 0, .26);
-            border: 1px solid rgba(255, 255, 255, .14);
+            background: rgba(37, 35, 35, 0.65);
+            border: 2px inset rgba(255, 255, 255, 0.6);
             outline: none;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
-            color: var(--text);
+            box-shadow: 0 0px 5px 2px inset rgba(255, 255, 255, .05);
+            color: white;
+            text-shadow: 0 0 1px white, 0 0 1px white;
         }
 
         textarea {
@@ -696,30 +696,25 @@
             color: rgba(255, 255, 255, .42);
         }
 
-        /* =======================
-    Footer
-    ======================= */
         .footer {
             margin-top: auto;
             padding: 18px var(--pad) 28px;
             color: rgba(255, 255, 255, .55);
             font-size: 12px;
             text-align: center;
+            padding-bottom: calc(28px + env(safe-area-inset-bottom));
         }
 
         /* =======================
-    Responsive
-    ======================= */
-
-        /* large phones / small tablets */
-        @media (min-width: 560px) {
+       Responsive
+       ======================= */
+        @media (min-width:560px) {
             .grid.cols2 {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-        /* desktop */
-        @media (min-width: 760px) {
+        @media (min-width:760px) {
             .menuBtn {
                 display: none;
             }
@@ -780,22 +775,55 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (max-width:560px) {
+            .topbar {
+                background: black;
+                padding: 10px 15px;
+                border-bottom: 1px solid #ffffff26;
+            }
+
+            .masthead__inner {
+                padding: 80px 20px;
+                margin: 0px auto;
+                max-width: 100%;
+                width: auto;
+                height: auto;
+
+            }
+
+            .hero {
+                padding: 30px 20px 0px 30px;
+                border-radius: 40px;
+                border: 3px inset rgb(118, 91, 151);
+                position: relative;
+                overflow: hidden;
+                backdrop-filter: blur(3px);
+                -webkit-backdrop-filter: blur(10px);
+                margin: 35px 15px;
+            }
+
+            .mastheadLead {
+                margin-bottom: -40px;
+                margin-top: -20px;
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
             * {
                 scroll-behavior: auto !important;
                 transition: none !important;
             }
         }
     </style>
-
 </head>
 
 <body>
-    <div class="wrap">
+    <div class="page-bg" aria-hidden="true"></div>
 
+    <div class="wrap">
         <header class="topbar">
             <div class="topbar__inner">
-                <a class="brand" href="/" aria-label="Volynx home">
+                <a class="brand" href="./" aria-label="Volynx home">
                     <span class="brand__mark">V</span>
                     <span class="brand__text">
                         <strong>VOLYNX</strong>
@@ -827,23 +855,23 @@
 
         <section class="masthead" aria-label="Volynx header banner">
             <div class="masthead__inner">
-                <img class="wordmark" src="/assets/new-wordmark.webp" alt="VOLYNX" />
+                <img class="wordmark" src="./assets/new-wordmark.webp" alt="VOLYNX" />
                 <p class="mastheadLead">
-                    Productized web studio for UK/EU: conversion-first websites + micro-tools that reduce support load
-                    and
-                    increase qualified leads.
+                    Productized web studio for UK/EU: conversion-first websites + micro-tools that reduce support
+                    load
+                    and increase qualified leads.
                 </p>
             </div>
         </section>
 
         <main class="shell">
-
             <section class="hero" aria-label="Hero">
                 <div class="kicker"><span class="dot"></span> Productized Studio</div>
                 <h1>Conversion-first websites — with micro-tools that cut support load and increase qualified leads.
                 </h1>
                 <p class="sub">
-                    Volynx ships conversion-first web experiences and small tools that remove friction (lead routing,
+                    Volynx ships conversion-first web experiences and small tools that remove friction (lead
+                    routing,
                     calculators,
                     image tools, onboarding micros). Predictable delivery. Clean handover.
                 </p>
@@ -862,7 +890,8 @@
 
             <section class="card" aria-label="Proof">
                 <h2>Proof, not promises</h2>
-                <p class="small">Replace the placeholders below with Lighthouse screenshots / links / short demos.</p>
+                <p class="small">Replace the placeholders below with Lighthouse screenshots / links / short demos.
+                </p>
 
                 <div class="grid cols2">
                     <div class="proofItem">
@@ -909,7 +938,7 @@
                 <p class="muted">Three offers. Clear scope. Predictable delivery.</p>
 
                 <div class="grid cols3">
-                    <article class="card" style="background: rgba(255,255,255,.04);">
+                    <article class="card2">
                         <h2>Landing Sprint</h2>
                         <p class="muted">7–10 days. For launches, offers, validation.</p>
                         <span class="price">From £— / €—</span>
@@ -921,7 +950,7 @@
                         </ul>
                     </article>
 
-                    <article class="card" style="background: rgba(255,255,255,.04);">
+                    <article class="card2">
                         <h2>Premium Website</h2>
                         <p class="muted">2–4 weeks. Credibility + conversion.</p>
                         <span class="price">From £— / €—</span>
@@ -933,7 +962,7 @@
                         </ul>
                     </article>
 
-                    <article class="card" style="background: rgba(255,255,255,.04);">
+                    <article class="card2">
                         <h2>Conversion Tools Add-on</h2>
                         <p class="muted">Reduce repetitive support. Improve lead quality.</p>
                         <span class="price">From £— / €—</span>
@@ -947,15 +976,14 @@
                 </div>
 
                 <p class="small" style="margin-top:10px;">
-                    Tip: If you're unsure, start with a Landing Sprint. We can expand without rebuilding from scratch.
+                    Tip: If you're unsure, start with a Landing Sprint. We can expand without rebuilding from
+                    scratch.
                 </p>
             </section>
 
             <section class="card" id="cases" aria-label="Case studies">
                 <h2>Case studies (5 pieces, not 20)</h2>
-                <p class="muted">
-                    Each case shows: problem → approach → stack → outcome (or proxy metrics).
-                </p>
+                <p class="muted">Each case shows: problem → approach → stack → outcome (or proxy metrics).</p>
 
                 <div class="caseList">
                     <a class="case" href="/volynx.lab/image-scaler/" aria-label="Case: Image Scaler">
@@ -963,7 +991,8 @@
                             <div class="caseTitle">Image Scaler — pay-per-use tool</div>
                             <span class="tag">Tool • Labs</span>
                         </div>
-                        <p class="caseMeta">Problem → pipeline → output quality. Add: Lighthouse + short demo video.</p>
+                        <p class="caseMeta">Problem → pipeline → output quality. Add: Lighthouse + short demo video.
+                        </p>
                     </a>
 
                     <a class="case" href="/case-studies/lead-router-bot/" aria-label="Case: Lead Router Bot">
@@ -971,7 +1000,8 @@
                             <div class="caseTitle">Anti-fallback bot + lead routing (chips)</div>
                             <span class="tag">Automation</span>
                         </div>
-                        <p class="caseMeta">Form-first funnel. WhatsApp as last resort. Add: completion rate proxy.</p>
+                        <p class="caseMeta">Form-first funnel. WhatsApp as last resort. Add: completion rate proxy.
+                        </p>
                     </a>
 
                     <a class="case" href="/case-studies/devjourney-landing/" aria-label="Case: DevJourney landing">
@@ -995,16 +1025,15 @@
                             <div class="caseTitle">Refactor/Rescue — risk reduction</div>
                             <span class="tag">Rescue</span>
                         </div>
-                        <p class="caseMeta">Before/after. Fix layout, performance, accessibility. Reliable delivery.</p>
+                        <p class="caseMeta">Before/after. Fix layout, performance, accessibility. Reliable delivery.
+                        </p>
                     </a>
                 </div>
             </section>
 
             <section class="card" aria-label="Labs">
                 <h2>Volynx Lab</h2>
-                <p class="muted">
-                    Tools are leverage. They prove capability and reduce costs for clients.
-                </p>
+                <p class="muted">Tools are leverage. They prove capability and reduce costs for clients.</p>
                 <div class="grid cols2">
                     <div class="proofItem">
                         <strong>Explore tools</strong>
@@ -1048,7 +1077,8 @@
             <section class="card" id="contact" aria-label="Contact">
                 <h2>Contact</h2>
                 <p class="muted">
-                    Share what you’re building and what “success” looks like. You’ll get next steps and a clear delivery
+                    Share what you’re building and what “success” looks like. You’ll get next steps and a clear
+                    delivery
                     plan.
                 </p>
 
@@ -1081,7 +1111,6 @@
                     </p>
                 </form>
             </section>
-
         </main>
 
         <footer class="footer">
