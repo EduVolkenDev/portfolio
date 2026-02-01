@@ -13,13 +13,28 @@
     <!-- GitHub Pages (repo: /portfolio/) => use paths RELATIVOS -->
     <link rel="preload" as="image" href="./assets/future-background.webp">
     <link rel="preload" as="image" href="./assets/new-wordmark.webp">
+    <script>document.documentElement.classList.add('js');</script>
 
     <style>
         :root {
-            /* Alturas “contratuais” (ajuste fino aqui) */
-            --topbarH: 64px;
+            --topbarH: 120px;
+
+            --bg: #070A12;
+            --text: rgba(255, 255, 255, .92);
+            --muted: rgba(255, 255, 255, .72);
+
+            --pad: 16px;
+            --max: 1040px;
+
+            --accent: rgba(255, 214, 140, .18);
+            --accent2: rgba(255, 214, 140, .10);
+
+            --r2: 26px;
+            --shadow2: 0 12px 34px rgba(0, 0, 0, .40);
+
             /* se ficar gap/overlap, ajuste 60–72 */
-            --mastH: clamp(240px, 42svh, 520px);
+            --mastH: clamp(360px, 180svh, 950px);
+            --wordmarkWDesktop: 1550px;
 
             /* Controle do banner */
             --banner-contrast: 1.06;
@@ -54,7 +69,7 @@
             margin: 0;
             min-height: 100%;
             color: var(--text);
-            background: var(--bg);
+            background: linear-gradient(180deg, rgba(7, 10, 18, .10), rgba(5, 6, 17, .25));
             font: 16px/1.55 "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
             letter-spacing: .2px;
             overflow-x: hidden;
@@ -87,33 +102,17 @@
             border-color: rgba(255, 255, 255, .22);
         }
 
-        .wrap {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: none;
-            /* evita “boxed” acidental */
-            margin: 0;
-            min-height: 100svh;
-            display: flex;
-            flex-direction: column;
-            padding-bottom: calc(24px + env(safe-area-inset-bottom));
-        }
-
         /* ===== Background simples (imagem + overlay leve) ===== */
-        body {
-            margin: 0;
-            color: rgba(255, 255, 255, .92);
-            background: linear-gradient(180deg, rgba(7, 10, 18, 0.1), rgba(5, 6, 17, 0.25)), url("./assets/future-background.webp");
-            background-position-x: 0%, 0%;
-            background-position-y: 0%, 0%;
-            background-size:fit, cover;
-            background-position: center;
-            background-repeat: round, repeat;
-            font: 16px/1.55 "Manrope", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
-            overflow-x: hidden;
-        }
 
+        .page-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: url("./assets/future-background.webp") center/cover no-repeat;
+            transform: translateZ(0);
+            filter: saturate(1.05) contrast(1.05) brightness(.8);
+        }
 
         /* ===== Banner simples (imagem de fundo no próprio elemento) ===== */
         .masthead {
@@ -140,6 +139,354 @@
             /* ou deixa reto */
         }
 
+        /* =========================
+   Intro: page + wordmark
+   ========================= */
+
+        html.js:not(.is-ready) .wordmark,
+        html:not(.is-ready) .mastheadLead {
+            opacity: 0;
+        }
+
+        /* opcional: faz o conteúdo abaixo entrar depois da logo */
+        html.js:not(.is-ready) .shell {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        html.is-ready .wordmark {
+            animation: wordmarkTriumph 1400ms cubic-bezier(.16, 1, .3, 1) both;
+        }
+
+        /* estado inicial */
+        html:not(.is-ready) .topbar {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        html:not(.is-ready) .masthead {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        html:not(.is-ready) .wordmark,
+        html:not(.is-ready) .mastheadLead {
+            opacity: 0;
+        }
+
+        /* conteúdo abaixo entra depois */
+        html:not(.is-ready) .shell {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+
+        /* quando o JS aplica .is-ready */
+        html.is-ready .topbar {
+            animation: topbarIn 520ms ease-out 80ms both;
+        }
+
+        html.is-ready .masthead {
+            animation: mastheadIn 650ms ease-out 120ms both;
+        }
+
+        html.is-ready .wordmark {
+            animation: wordmarkTriumph 1400ms cubic-bezier(.16, 1, .3, 1) both;
+        }
+
+        html.is-ready .mastheadLead {
+            animation: textReveal 900ms ease-out 900ms both;
+        }
+
+        html.is-ready .shell {
+            animation: contentIn 900ms ease-out 1100ms both;
+        }
+
+        /* opcional: “stagger” por seção (fica premium) */
+        html.is-ready .shell>section {
+            opacity: 0;
+            transform: translateY(12px);
+            animation: sectionIn 700ms ease-out both;
+            animation-delay: calc(1150ms + (var(--i, 0) * 90ms));
+        }
+
+        .shell>section:nth-child(1) {
+            --i: 0;
+        }
+
+        .shell>section:nth-child(2) {
+            --i: 1;
+        }
+
+        .shell>section:nth-child(3) {
+            --i: 2;
+        }
+
+        .shell>section:nth-child(4) {
+            --i: 3;
+        }
+
+        .shell>section:nth-child(5) {
+            --i: 4;
+        }
+
+        .shell>section:nth-child(6) {
+            --i: 5;
+        }
+
+        .shell>section:nth-child(7) {
+            --i: 6;
+        }
+
+        .shell>section:nth-child(8) {
+            --i: 7;
+        }
+
+        @keyframes topbarIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes mastheadIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sectionIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        html.is-ready .mastheadLead {
+            animation: textReveal 900ms ease-out 900ms both;
+        }
+
+        html.is-ready .shell {
+            animation: contentIn 900ms ease-out 850ms both;
+        }
+
+        /* garante que os efeitos não vazem */
+        .masthead__inner {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* bloom “atrás” da logo (luz/halo) */
+        .masthead__inner::before {
+            content: "";
+            position: absolute;
+            inset: -20%;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(.92);
+            filter: blur(20px);
+            mix-blend-mode: screen;
+            background:
+                radial-gradient(closest-side at 50% 44%, rgba(180, 120, 255, .55), rgba(180, 120, 255, 0) 60%),
+                radial-gradient(closest-side at 50% 44%, rgba(120, 220, 255, .35), rgba(120, 220, 255, 0) 62%),
+                radial-gradient(closest-side at 50% 44%, rgba(255, 255, 255, .20), rgba(255, 255, 255, 0) 68%);
+        }
+
+        html.is-ready .masthead__inner::before {
+            animation: bloom 1600ms cubic-bezier(.16, 1, .3, 1) both;
+        }
+
+        /* “sweep” de luz (faixa passando) */
+        .masthead__inner::after {
+            content: "";
+            position: absolute;
+            top: -25%;
+            left: -60%;
+            width: 55%;
+            height: 130%;
+            pointer-events: none;
+            opacity: 0;
+            transform: skewX(-18deg) translateX(-120%);
+            mix-blend-mode: screen;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, .18) 45%,
+                    rgba(180, 120, 255, .22) 55%,
+                    rgba(255, 255, 255, 0) 100%);
+        }
+
+        html.is-ready .masthead__inner::after {
+            animation: sweep 1200ms cubic-bezier(.10, 1, .53, 1) 240ms both
+        }
+
+        /* performance */
+        .wordmark {
+            will-change: transform, opacity, filter;
+        }
+
+        .masthead__inner::before,
+        .masthead__inner::after {
+            will-change: transform, opacity;
+        }
+
+        /* keyframes */
+        @keyframes pageFade {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes wordmarkTriumph {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 18px, 0) scale(.92);
+                filter: blur(8px) drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+            }
+
+            55% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1.02);
+                filter: blur(0px) drop-shadow(0 0 40px rgba(180, 120, 255, .40));
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+                filter: blur(0px) drop-shadow(0 18px 50px rgba(0, 0, 0, .55));
+            }
+        }
+
+        @keyframes bloom {
+            0% {
+                opacity: 0;
+                transform: scale(.92);
+            }
+
+            60% {
+                opacity: .95;
+                transform: scale(1.02);
+            }
+
+            100% {
+                opacity: .45;
+                transform: scale(1.00);
+            }
+        }
+
+        @keyframes sweep {
+            0% {
+                opacity: 0;
+                transform: skewX(-18deg) translateX(-120%);
+            }
+
+            25% {
+                opacity: .9;
+            }
+
+            100% {
+                opacity: 0;
+                transform: skewX(-18deg) translateX(240%);
+            }
+        }
+
+        @keyframes textReveal {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+                filter: blur(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes contentIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* acessibilidade */
+        @media (prefers-reduced-motion: reduce) {
+
+            @media (prefers-reduced-motion: reduce) {
+
+                html:not(.is-ready) .topbar,
+                html:not(.is-ready) .masthead,
+                html:not(.is-ready) .shell,
+                html:not(.is-ready) .wordmark,
+                html:not(.is-ready) .mastheadLead {
+                    opacity: 1 !important;
+                    transform: none !important;
+                }
+
+                .topbar,
+                .masthead,
+                .shell,
+                .wordmark,
+                .mastheadLead,
+                .masthead__inner::before,
+                .masthead__inner::after,
+                .shell>section {
+                    animation: none !important;
+                }
+            }
+
+
+            html:not(.is-ready) .wrap,
+            html:not(.is-ready) .wordmark,
+            html:not(.is-ready) .mastheadLead,
+            html:not(.is-ready) .shell {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .wrap,
+            .wordmark,
+            .mastheadLead,
+            .shell {
+                animation: none !important;
+            }
+
+            .masthead__inner::before,
+            .masthead__inner::after {
+                animation: none !important;
+                display: none !important;
+            }
+        }
+
+
 
         .wordmark {
             width: min(520px, 92vw);
@@ -162,43 +509,37 @@
             left: 0;
             right: 0;
             z-index: 60;
-            background: black;
-            padding: 15px 300px;
+            background: #000;
+            border-bottom: 1px solid #ffffff26;
+            padding-top: env(safe-area-inset-top);
         }
 
-
-        /* Desktop: banner mais “cinema” */
-        @media (min-width: 760px) {
-            .masthead__inner {
-                padding: 48px 18px;
-            }
-
-            .wordmark {
-                width: min(1000px, 90vw);
-                padding-top: 60px;
-            }
-
-            .mastheadLead {
-                font-size: 30px;
-                text-align: center;
-                font-weight: 700;
-            }
-
-        }
-
-        /* =======================
-       Topbar
-       ======================= */
-
+        /* Inner pode quebrar linha no mobile */
         .topbar__inner {
             max-width: var(--max);
             margin: 0 auto;
-            padding:
-                12px calc(var(--pad) + env(safe-area-inset-right)) 12px calc(var(--pad) + env(safe-area-inset-left));
+            padding: 12px calc(var(--pad) + env(safe-area-inset-right)) 12px calc(var(--pad) + env(safe-area-inset-left));
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .nav {
+            display: none;
+        }
+
+        /* Empurra o site pelo tamanho REAL da topbar */
+        .wrap {
+            position: relative;
+            z-index: 1;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            padding-top: var(--topbarH);
+            /* <- alimentado via JS */
+            padding-bottom: calc(24px + env(safe-area-inset-bottom));
         }
 
         .brand {
@@ -271,26 +612,21 @@
             transform: translateY(1px);
         }
 
-        .nav {
-            display: none;
-            gap: 10px;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
         .chip {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 9px 12px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, .03);
-            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, 0.20);
+            border: 2px outset rgba(255, 255, 255, 0.3);
             color: rgba(255, 255, 255, .88);
             font-size: 13px;
             box-shadow: 0 10px 22px rgba(0, 0, 0, .24);
             -webkit-tap-highlight-color: transparent;
             white-space: nowrap;
+            flex: 0 0 auto;
+            font-weight: 700;
         }
 
         .chip:active {
@@ -314,18 +650,6 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-        }
-
-        /* =======================
-       Masthead Banner
-       ======================= */
-        /* Topbar vira FIXA (para o masthead fixar “embaixo dela”) */
-        .topbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 60;
         }
 
 
@@ -447,6 +771,10 @@
         .btn--ghost:hover {
             box-shadow: 0 0px 10px 5px rgba(251, 251, 251, 0.5);
             animation: transition 0.6s ease-in-out;
+        }
+
+        [id] {
+            scroll-margin-top: calc(var(--topbarH) + 12px);
         }
 
         .trustRow {
@@ -719,10 +1047,6 @@
                 display: none;
             }
 
-            .nav {
-                display: inline-flex;
-            }
-
             .drawer {
                 display: none !important;
             }
@@ -748,10 +1072,6 @@
                 align-items: start;
             }
 
-            .grid.cols3 {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-
             .chip:hover {
                 border-color: rgba(255, 255, 255, .18);
                 background: rgba(255, 255, 255, .05);
@@ -773,6 +1093,75 @@
                 border-color: rgba(255, 255, 255, .18);
                 background: rgba(255, 255, 255, .04);
             }
+
+            .masthead__inner {
+                /* deixa a wordmark “respirar” (sem limitar em 1040px) */
+                max-width: none;
+                width: 100%;
+                margin: 0;
+                height: var(--mastH);
+
+                /* layout estável: logo em cima, texto embaixo */
+                display: grid;
+                grid-template-rows: 1fr auto;
+                align-items: center;
+                justify-items: center;
+
+                /* mantém o resto da página parado */
+                padding: 0 18px 18px;
+                background: transparent;
+                /* remove o “card” gigante no banner */
+                border-radius: 0;
+                overflow: hidden;
+                /* se a logo passar, corta sem empurrar o layout */
+                position: relative;
+            }
+
+            .wordmark {
+                width: min(var(--wordmarkWDesktop), 96vw);
+                height: auto;
+                display: block;
+
+                /* opcional: garante que não invada o texto */
+                max-height: calc(var(--mastH) - 110px);
+                object-fit: contain;
+
+                filter: drop-shadow(0 18px 50px rgba(0, 0, 0, .55));
+            }
+
+            .mastheadLead {
+                width: min(74ch, 92vw);
+                margin: 0;
+                text-align: center;
+                font-size: 22px;
+                font-weight: 700;
+                line-height: 1.25;
+
+                /* “placa” só no texto (não no banner inteiro) */
+                padding: 12px 16px;
+                border-radius: 18px;
+                background: rgba(0, 0, 0, .32);
+                border: 1px solid rgba(255, 255, 255, .10);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+
+
+            .nav {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .grid.cols3 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width:980px) {
+            .grid.cols3 {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
         }
 
         @media (max-width:560px) {
@@ -780,15 +1169,6 @@
                 background: black;
                 padding: 10px 15px;
                 border-bottom: 1px solid #ffffff26;
-            }
-
-            .masthead__inner {
-                padding: 80px 20px;
-                margin: 0px auto;
-                max-width: 100%;
-                width: auto;
-                height: auto;
-
             }
 
             .hero {
@@ -805,6 +1185,23 @@
             .mastheadLead {
                 margin-bottom: -40px;
                 margin-top: -20px;
+            }
+
+            .wordmark {
+                width: min(98vw, 900px);
+                /* aumenta bastante no mobile */
+                max-width: none;
+                /* garante que nada limite */
+                display: block;
+                margin-inline: auto;
+                justify-self: center;
+            }
+
+            /* opcional: dá mais “palco” pra logo (sem esmagar) */
+            .masthead__inner {
+                padding-top: 30px;
+                padding-bottom: 70px;
+                padding-left: 2px;
             }
         }
 
@@ -836,9 +1233,9 @@
                 <nav class="nav" aria-label="Primary">
                     <a class="chip" href="#services">Services</a>
                     <a class="chip" href="#cases">Case Studies</a>
-                    <a class="chip" href="/volynx.lab/">Labs</a>
                     <a class="chip" href="#process">Process</a>
                     <a class="chip" href="#contact">Contact</a>
+                    <a class="chip" href="./volynx.lab/">Labs</a>
                 </nav>
             </div>
 
@@ -846,9 +1243,9 @@
                 <div class="drawer__inner">
                     <a class="chip" href="#services">Services</a>
                     <a class="chip" href="#cases">Case Studies</a>
-                    <a class="chip" href="/volynx.lab/">Labs</a>
                     <a class="chip" href="#process">Process</a>
                     <a class="chip" href="#contact">Contact</a>
+                    <a class="chip" href="./volynx.lab/">Labs</a>
                 </div>
             </div>
         </header>
@@ -857,8 +1254,7 @@
             <div class="masthead__inner">
                 <img class="wordmark" src="./assets/new-wordmark.webp" alt="VOLYNX" />
                 <p class="mastheadLead">
-                    Productized web studio for UK/EU: conversion-first websites + micro-tools that reduce support
-                    load
+                    Worldwide productized web studio: conversion-first websites + micro-tools that reduce support load
                     and increase qualified leads.
                 </p>
             </div>
@@ -867,13 +1263,13 @@
         <main class="shell">
             <section class="hero" aria-label="Hero">
                 <div class="kicker"><span class="dot"></span> Productized Studio</div>
-                <h1>Conversion-first websites — with micro-tools that cut support load and increase qualified leads.
+                <h1>Conversion-first websites — and micro-tools that cut support loads to increase qualified leads.
                 </h1>
                 <p class="sub">
-                    Volynx ships conversion-first web experiences and small tools that remove friction (lead
+                    Volynx ships conversion-first web experiences + small tools to remove friction: lead
                     routing,
                     calculators,
-                    image tools, onboarding micros). Predictable delivery. Clean handover.
+                    image tools, onboarding micros and much more. Predictable delivery. Clean handover.
                 </p>
 
                 <div class="heroActions">
@@ -882,7 +1278,7 @@
                 </div>
 
                 <div class="trustRow" aria-label="Trust badges">
-                    <span class="badge">UK/EU timezone overlap</span>
+                    <span class="badge">Worldwide timezone availability</span>
                     <span class="badge">Performance-first builds</span>
                     <span class="badge">GDPR-minded delivery</span>
                 </div>
@@ -986,7 +1382,7 @@
                 <p class="muted">Each case shows: problem → approach → stack → outcome (or proxy metrics).</p>
 
                 <div class="caseList">
-                    <a class="case" href="/volynx.lab/image-scaler/" aria-label="Case: Image Scaler">
+                    <a class="case" href="./volynx.lab/image-scaler/" aria-label="Case: Image Scaler">
                         <div class="caseHeader">
                             <div class="caseTitle">Image Scaler — pay-per-use tool</div>
                             <span class="tag">Tool • Labs</span>
@@ -995,7 +1391,7 @@
                         </p>
                     </a>
 
-                    <a class="case" href="/case-studies/lead-router-bot/" aria-label="Case: Lead Router Bot">
+                    <a class="case" href="./case-studies/lead-router-bot/" aria-label="Case: Lead Router Bot">
                         <div class="caseHeader">
                             <div class="caseTitle">Anti-fallback bot + lead routing (chips)</div>
                             <span class="tag">Automation</span>
@@ -1004,7 +1400,7 @@
                         </p>
                     </a>
 
-                    <a class="case" href="/case-studies/devjourney-landing/" aria-label="Case: DevJourney landing">
+                    <a class="case" href="./case-studies/devjourney-landing/" aria-label="Case: DevJourney landing">
                         <div class="caseHeader">
                             <div class="caseTitle">DevJourney landing — offer + conversion</div>
                             <span class="tag">Landing</span>
@@ -1012,7 +1408,7 @@
                         <p class="caseMeta">Copy, UI, performance, time-to-deploy. Add: before/after.</p>
                     </a>
 
-                    <a class="case" href="/services/" aria-label="Case: Volynx services page">
+                    <a class="case" href="./services/" aria-label="Case: Volynx services page">
                         <div class="caseHeader">
                             <div class="caseTitle">VOLYNX services — design system consistency</div>
                             <span class="tag">Brand</span>
@@ -1020,7 +1416,7 @@
                         <p class="caseMeta">Responsive build + clean structure. Add: system tokens + components.</p>
                     </a>
 
-                    <a class="case" href="/case-studies/refactor-rescue/" aria-label="Case: Refactor rescue">
+                    <a class="case" href="./case-studies/refactor-rescue/" aria-label="Case: Refactor rescue">
                         <div class="caseHeader">
                             <div class="caseTitle">Refactor/Rescue — risk reduction</div>
                             <span class="tag">Rescue</span>
@@ -1123,10 +1519,28 @@
 
         const menuBtn = document.getElementById("menuBtn");
         const drawer = document.getElementById("drawer");
+        const topbar = document.querySelector(".topbar");
+
+        function syncTopbarHeight() {
+            if (!topbar) return;
+            // mede altura real (inclui chips/2 linhas)
+            const h = Math.ceil(topbar.getBoundingClientRect().height);
+            document.documentElement.style.setProperty("--topbarH", h + "px");
+        }
+
+        // roda em load + resize + após abrir/fechar drawer (se usar)
+        window.addEventListener("load", syncTopbarHeight);
+        window.addEventListener("resize", syncTopbarHeight);
+        window.addEventListener("orientationchange", syncTopbarHeight);
+
+        // garante update depois do layout assentar
+        requestAnimationFrame(syncTopbarHeight);
+        setTimeout(syncTopbarHeight, 50);
 
         const toggleDrawer = () => {
             const open = drawer.classList.toggle("open");
             menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+            syncTopbarHeight();
         };
 
         menuBtn?.addEventListener("click", toggleDrawer);
@@ -1136,6 +1550,7 @@
             if (!a) return;
             drawer.classList.remove("open");
             menuBtn.setAttribute("aria-expanded", "false");
+            syncTopbarHeight();
         });
 
         const form = document.getElementById("contactForm");
@@ -1148,6 +1563,15 @@
             statusEl.textContent = "Sent. You’ll receive a reply with next steps.";
             form.reset();
         });
+        // Intro: dispara quando tudo carregou (evita “flash” feio)
+        (() => {
+            const root = document.documentElement;
+            const fire = () => requestAnimationFrame(() => root.classList.add("is-ready"));
+
+            if (document.readyState === "complete") fire();
+            else window.addEventListener("load", fire, { once: true });
+        })();
+
     </script>
 </body>
 
